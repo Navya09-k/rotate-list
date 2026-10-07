@@ -1,2 +1,12 @@
-# rotate-list
-The program rotates a linked list to the right by k positions. It first counts the nodes, connects the last node to the first to form a circle, and then breaks the circle at the correct position. Using k modulo the list length avoids unnecessary rotations. The solution runs in O(n) time and O(1) space.
+class Solution:
+    def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        if not head or not head.next: return head
+        n, tail = 1, head
+        while tail.next: tail = tail.next; n += 1
+        k %= n
+        if not k: return head
+        tail.next = head
+        for _ in range(n-k): tail = tail.next
+        head = tail.next
+        tail.next = None
+        return head
